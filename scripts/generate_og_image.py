@@ -18,32 +18,42 @@ HAIRLINE = (143, 176, 198, 56)
 
 FONT = {
     "A": ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
+    "B": ["11110", "10001", "10001", "11110", "10001", "10001", "11110"],
     "C": ["01110", "10001", "10000", "10000", "10000", "10001", "01110"],
     "D": ["11110", "10001", "10001", "10001", "10001", "10001", "11110"],
     "E": ["11111", "10000", "10000", "11110", "10000", "10000", "11111"],
     "F": ["11111", "10000", "10000", "11110", "10000", "10000", "10000"],
+    "G": ["01110", "10001", "10000", "10011", "10001", "10001", "01110"],
     "H": ["10001", "10001", "10001", "11111", "10001", "10001", "10001"],
     "I": ["11111", "00100", "00100", "00100", "00100", "00100", "11111"],
     "L": ["10000", "10000", "10000", "10000", "10000", "10000", "11111"],
     "M": ["10001", "11011", "10101", "10101", "10001", "10001", "10001"],
+    "N": ["10001", "11001", "10101", "10011", "10001", "10001", "10001"],
     "O": ["01110", "10001", "10001", "10001", "10001", "10001", "01110"],
+    "P": ["11110", "10001", "10001", "11110", "10000", "10000", "10000"],
     "R": ["11110", "10001", "10001", "11110", "10100", "10010", "10001"],
     "S": ["01111", "10000", "10000", "01110", "00001", "00001", "11110"],
     "T": ["11111", "00100", "00100", "00100", "00100", "00100", "00100"],
+    "U": ["10001", "10001", "10001", "10001", "10001", "10001", "01110"],
     "W": ["10001", "10001", "10001", "10101", "10101", "11011", "10001"],
+    "Y": ["10001", "10001", "01010", "00100", "00100", "00100", "00100"],
     " ": ["00000", "00000", "00000", "00000", "00000", "00000", "00000"],
 }
 
-WORD = "LOCAL AI"
+WORD = "BEYOND"
 CHAR_W = 6
 ROWS = 11
-COLS = len(WORD) * CHAR_W + 3
+
+
+def cols_for(word: str) -> int:
+    return len(word) * CHAR_W + 3
 
 
 def build_target(word: str) -> list[list[int]]:
-    grid = [[0 for _ in range(COLS)] for _ in range(ROWS)]
+    cols = cols_for(word)
+    grid = [[0 for _ in range(cols)] for _ in range(ROWS)]
     word_cols = len(word) * CHAR_W - 1
-    start_c = (COLS - word_cols) // 2
+    start_c = (cols - word_cols) // 2
     start_r = 2
     for i, ch in enumerate(word):
         glyph = FONT.get(ch, FONT[" "])
@@ -75,9 +85,10 @@ def draw_background(draw: ImageDraw.ImageDraw) -> None:
 
 def draw_matrix(img: Image.Image, draw: ImageDraw.ImageDraw, cx: int, cy: int) -> None:
     target = build_target(WORD)
+    cols = cols_for(WORD)
     dot = 14
     gap = 5
-    matrix_w = COLS * dot + (COLS - 1) * gap
+    matrix_w = cols * dot + (cols - 1) * gap
     matrix_h = ROWS * dot + (ROWS - 1) * gap
     pad = 28
     frame_x0 = cx - matrix_w // 2 - pad
@@ -99,7 +110,7 @@ def draw_matrix(img: Image.Image, draw: ImageDraw.ImageDraw, cx: int, cy: int) -
     y0 = cy - matrix_h // 2
 
     for r in range(ROWS):
-        for c in range(COLS):
+        for c in range(cols):
             lit = target[r][c]
             px = x0 + c * (dot + gap)
             py = y0 + r * (dot + gap)
