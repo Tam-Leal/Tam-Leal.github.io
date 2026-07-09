@@ -415,7 +415,7 @@
     <div class="eyebrow">// tam leal · ai engineer · product engineer</div>
     <div class="matrix-frame">
       <span class="tag">16px matrix · radar sweep active</span>
-      <canvas id="ledCanvas" role="img" aria-label="Animated LED matrix displaying the words: hardware, beyond, shipped, craft"></canvas>
+      <canvas id="ledCanvas" role="img" aria-label="Animated LED matrix displaying the words: build, product, deploy, shipped"></canvas>
     </div>
     <h1>I build things that work <em>beyond the screen</em>: from firmware to apps, from radar to AI models.</h1>
     <p class="lede">
@@ -682,7 +682,7 @@
    - Mouse/touch lights LEDs by proximity
    ===================================================================== */
 (function(){
-  const WORDS = ['HARDWARE', 'BEYOND', 'SHIPPED', 'CRAFT'];
+  const WORDS = ['BUILD', 'PRODUCT', 'DEPLOY', 'SHIPPED'];
 
   // pixel font, 5 cols x 7 rows (1 = lit)
   const FONT = {
@@ -713,10 +713,9 @@
   const ctx = canvas.getContext('2d');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // grade lógica: largura = palavra mais longa, com margem
+  // grade lógica: largura fixa (8 chars) para o painel não mudar de tamanho ao trocar palavras
   const CHAR_W = 6; // 5 px + 1 de espaço
-  const longest = Math.max(...WORDS.map(w => w.length));
-  const COLS = longest * CHAR_W + 3;
+  const COLS = 8 * CHAR_W + 3;
   const ROWS = 11; // 7 da fonte + margens
 
   let dotSize, gap, W, H;
