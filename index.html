@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tam Leal · AI Engineer</title>
+<meta name="description" content="Project portfolio: hardware, local AI, apps and automation." />
+<meta property="og:title" content="Tam Leal · AI Engineer" />
+<meta property="og:description" content="Project portfolio: hardware, local AI, apps and automation." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://tam-leal.github.io/" />
+<link rel="canonical" href="https://tam-leal.github.io/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Tam Leal · AI Engineer" />
+<meta name="twitter:description" content="Project portfolio: hardware, local AI, apps and automation." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%230e2233' width='32' height='32' rx='4'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23ffb340'/%3E%3C/svg%3E" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     QUICK CONFIG: edit here
+     Name, email and links also in the <footer> block below.
+     ============================================================ */
+
+  :root{
+    --bp:        #0e2233;   /* blueprint blue */
+    --bp-deep:   #0a1926;
+    --grid:      rgba(126,178,214,0.07);
+    --grid-strong: rgba(126,178,214,0.14);
+    --ink:       #dcE9f5;   /* blue-white ink */
+    --ink-dim:   #8fb0c6;
+    --ink-faint: #56788f;
+    --led:       #ffb340;   /* LED amber */
+    --led-hot:   #ffd27a;
+    --hairline:  rgba(143,176,198,0.22);
+    --maxw: 1120px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body{
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      linear-gradient(var(--grid-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-strong) 1px, transparent 1px),
+      radial-gradient(ellipse 120% 80% at 50% -10%, #14304a 0%, var(--bp) 55%, var(--bp-deep) 100%);
+    background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px, 100% 100%;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  ::selection{ background: var(--led); color: var(--bp-deep); }
+
+  .skip-link{
+    position: absolute; left: -9999px; top: auto;
+    width: 1px; height: 1px; overflow: hidden;
+  }
+  .skip-link:focus{
+    position: fixed; top: 12px; left: 12px; z-index: 100;
+    width: auto; height: auto; overflow: visible;
+    padding: 10px 16px;
+    background: var(--bp-deep); color: var(--led);
+    border: 1px solid var(--led);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .sheet{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---- marcas de registro (cantos de prancheta) ---- */
+  .regmark{
+    position: fixed; width: 22px; height: 22px; z-index: 5; pointer-events: none;
+    opacity: .55;
+  }
+  .regmark::before, .regmark::after{
+    content:''; position:absolute; background: var(--ink-dim);
+  }
+  .regmark::before{ width:100%; height:1px; top:50%; }
+  .regmark::after{ height:100%; width:1px; left:50%; }
+  .rm-tl{ top:14px; left:14px; } .rm-tr{ top:14px; right:14px; }
+  .rm-bl{ bottom:14px; left:14px; } .rm-br{ bottom:14px; right:14px; }
+
+  /* ---- barra superior ---- */
+  header.top{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 26px 0 0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  header.top .sig{ display:flex; align-items:center; gap:10px; color: var(--ink); }
+  header.top .sig .dot{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--led);
+    box-shadow: 0 0 8px var(--led), 0 0 18px rgba(255,179,64,.5);
+    animation: pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.45} }
+  header.top nav{ display:flex; gap:26px; }
+  header.top nav a{ color: var(--ink-dim); text-decoration:none; transition: color .2s; }
+  header.top nav a:hover, header.top nav a:focus-visible{ color: var(--led); }
+  @media (max-width: 560px){
+    header.top{
+      flex-direction: column; align-items: flex-start; gap: 14px;
+    }
+    header.top nav{
+      flex-wrap: wrap; gap: 10px 18px;
+      font-size: 10px; letter-spacing: .12em;
+    }
+  }
+
+  /* ---- HERO ---- */
+  .hero{ padding: 64px 0 40px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing:.22em; text-transform:uppercase;
+    color: var(--led);
+    margin-bottom: 18px;
+  }
+  .matrix-frame{
+    border: 1px solid var(--hairline);
+    background: rgba(6,15,24,.55);
+    padding: clamp(14px, 3vw, 28px);
+    position: relative;
+  }
+  .matrix-frame .tag{
+    position:absolute; top:-9px; left:16px;
+    background: var(--bp); padding: 0 8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing:.18em; color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  #ledCanvas{ display:block; width:100%; height:auto; cursor: crosshair; }
+
+  .hero h1{
+    font-family:'Instrument Sans', sans-serif;
+    font-weight: 600;
+    font-size: clamp(26px, 4.2vw, 44px);
+    letter-spacing: -0.02em;
+    line-height: 1.18;
+    margin-top: 40px;
+    max-width: 21ch;
+    text-wrap: balance;
+  }
+  .hero h1 em{ font-style: normal; color: var(--led); }
+  .hero p.lede{
+    margin-top: 18px; max-width: 58ch; color: var(--ink-dim); font-size: 17px;
+  }
+  .hero .scope{
+    margin-top: 28px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .hero .scope .count{
+    background: var(--led); color: var(--bp-deep);
+    padding: 6px 13px; font-weight: 500;
+  }
+  .hero .scope .tags{ color: var(--ink-dim); }
+  .hero .stackline{
+    margin-top: 14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: .06em;
+    color: var(--ink-faint);
+    max-width: 70ch; line-height: 1.9;
+  }
+
+  /* ---- títulos de seção ---- */
+  section{ padding: 84px 0 0; }
+  .sec-head{
+    display:flex; align-items:baseline; gap:16px;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 14px; margin-bottom: 8px;
+  }
+  .sec-head h2{
+    font-family:'Michroma', sans-serif;
+    font-size: clamp(15px, 2vw, 19px);
+    letter-spacing: .28em; text-transform: uppercase;
+    font-weight: 400;
+  }
+  .sec-head .ref{
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--ink-faint); letter-spacing:.14em; margin-left:auto;
+  }
+
+  /* ---- BUILDS (projetos) ---- */
+  .build{
+    display: grid;
+    grid-template-columns: 84px 1fr 300px;
+    gap: 28px;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .build.in{ opacity:1; transform:none; }
+  .build::before{
+    content:''; position:absolute; left:-28px; top:38px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--ink-faint);
+    transition: background .25s, box-shadow .25s;
+  }
+  .build:hover::before{
+    background: var(--led);
+    box-shadow: 0 0 10px var(--led);
+  }
+  .build .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing:.1em; color: var(--ink-faint);
+    padding-top: 5px;
+  }
+  .build .idx b{ display:block; color: var(--led); font-weight:500; font-size:13px; }
+  .build h3{
+    font-size: 21px; font-weight: 600; letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .build h3 span{ color: var(--ink-faint); font-weight:400; }
+  .build .desc{ color: var(--ink-dim); max-width: 56ch; }
+  .build .specs{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11.5px; line-height: 2;
+    color: var(--ink-dim);
+    border-left: 1px solid var(--hairline);
+    padding-left: 20px;
+    align-self: start;
+  }
+  .build .specs .k{ color: var(--ink-faint); letter-spacing:.1em; text-transform:uppercase; margin-right:8px; }
+  .build .specs .status-on{ color: var(--led); }
+  .build .impact{
+    margin-top: 16px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px; line-height: 1.55;
+    color: var(--ink);
+    border-left: 2px solid var(--led);
+    padding-left: 13px;
+  }
+  .build .impact b{
+    display:block; color: var(--led);
+    font-size: 10px; letter-spacing:.22em; text-transform:uppercase;
+    font-weight: 500; margin-bottom: 4px;
+  }
+  .build h3 a{
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid var(--hairline);
+    transition: border-color .2s, color .2s;
+  }
+  .build h3 a:hover, .build h3 a:focus-visible{ color: var(--led); border-color: var(--led); }
+  .build h3 a .arrow{ color: var(--ink-faint); font-size:.7em; margin-left:4px; }
+  .build .specs a{
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--hairline);
+    transition: color .2s, border-color .2s;
+  }
+  .build .specs a:hover, .build .specs a:focus-visible{ color: var(--led); border-color: var(--led); }
+  @media (max-width: 860px){
+    .build{ grid-template-columns: 1fr; gap: 14px; }
+    .build .specs{ border-left:none; padding-left:0; border-top: 1px dashed var(--hairline); padding-top: 12px; }
+    .build::before{ display:none; }
+  }
+
+  /* ---- BANCADA (stack) ---- */
+  .bench{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    margin-top: 26px;
+  }
+  .bench > div{
+    background: rgba(6,15,24,.5);
+    padding: 24px 22px;
+  }
+  .bench h4{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing:.2em; text-transform:uppercase;
+    color: var(--led); font-weight: 500; margin-bottom: 12px;
+  }
+  .bench p{ font-size: 14.5px; color: var(--ink-dim); }
+  @media (max-width: 760px){ .bench{ grid-template-columns: 1fr; } }
+
+  /* ---- CONTATO ---- */
+  .contact{ padding-bottom: 60px; }
+  .contact .big{
+    font-size: clamp(22px, 3.4vw, 34px);
+    font-weight: 600; letter-spacing:-0.02em;
+    max-width: 24ch; margin-top: 26px; text-wrap: balance;
+  }
+  .contact .availability{
+    margin-top: 16px;
+    display: flex; align-items: center; gap: 9px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px; letter-spacing: .07em;
+    color: var(--ink-dim);
+  }
+  .contact .availability .adot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--led);
+    box-shadow: 0 0 8px var(--led), 0 0 18px rgba(255,179,64,.5);
+    animation: pulse 2.6s ease-in-out infinite;
+    flex: none;
+  }
+  .contact .links{
+    margin-top: 28px; display:flex; flex-wrap:wrap; gap: 14px;
+  }
+  .contact .links a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px; letter-spacing:.1em;
+    color: var(--ink);
+    text-decoration:none;
+    border: 1px solid var(--hairline);
+    padding: 12px 20px;
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .contact .links a:hover, .contact .links a:focus-visible{
+    border-color: var(--led); color: var(--led-hot);
+    background: rgba(255,179,64,.06);
+  }
+
+  /* ---- bloco de título (rodapé estilo desenho técnico) ---- */
+  footer{
+    margin-top: 90px;
+    border-top: 1px solid var(--hairline);
+  }
+  .titleblock{
+    max-width: var(--maxw); margin: 0 auto; padding: 0 28px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing:.1em;
+  }
+  .titleblock > div{
+    border-right: 1px solid var(--hairline);
+    padding: 14px 16px 18px;
+  }
+  .titleblock > div:first-child{ border-left: 1px solid var(--hairline); }
+  .titleblock .k{
+    display:block; color: var(--ink-faint); font-size: 9.5px;
+    text-transform: uppercase; letter-spacing:.2em; margin-bottom: 4px;
+  }
+  .titleblock .v{ color: var(--ink); }
+  @media (max-width: 700px){
+    .titleblock{ grid-template-columns: 1fr 1fr; }
+    .titleblock > div{ border-left: 1px solid var(--hairline); border-top: 1px solid var(--hairline); margin-top:-1px; }
+  }
+
+  /* acessibilidade */
+  a:focus-visible{ outline: 2px solid var(--led); outline-offset: 3px; }
+  @media (max-width: 760px){
+    body{ background-attachment: scroll; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+    .build{ opacity:1; transform:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Tam Leal",
+  "jobTitle": "AI Engineer",
+  "email": "tamerleal22@gmail.com",
+  "sameAs": [
+    "https://github.com/Tam-Leal",
+    "https://linkedin.com/in/tamerleal"
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div class="regmark rm-tl"></div>
+<div class="regmark rm-tr"></div>
+<div class="regmark rm-bl"></div>
+<div class="regmark rm-br"></div>
+
+<div class="sheet">
+
+  <header class="top">
+    <div class="sig"><span class="dot"></span> TAM LEAL / PORTFOLIO</div>
+    <nav aria-label="Primary">
+      <a href="#ai-systems">AI Systems</a>
+      <a href="#products">Products</a>
+      <a href="#hardware">Hardware</a>
+      <a href="#workbench">Workbench</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+  <!-- ============ HERO ============ -->
+  <div class="hero">
+    <div class="eyebrow">// tam leal · ai engineer · product engineer</div>
+    <div class="matrix-frame">
+      <span class="tag">16px matrix · radar sweep active</span>
+      <canvas id="ledCanvas" role="img" aria-label="Animated LED matrix displaying the words: hardware, local AI, software, firmware"></canvas>
+    </div>
+    <h1>I build things that work <em>beyond the screen</em>: from firmware to apps, from radar to AI models.</h1>
+    <p class="lede">
+      I don't just integrate AI APIs. I build the systems around them: from embedded devices
+      and backend services to mobile apps and production-ready AI pipelines. This page is
+      designed like my workbench, and the LED matrix above is the same one that goes on the
+      back of my bike. Try moving your cursor over it.
+    </p>
+    <div class="scope">
+      <span class="count">10 featured projects</span>
+      <span class="tags">AI · Mobile · Computer Vision · Embedded Systems</span>
+    </div>
+    <div class="stackline">Python · FastAPI · React · React Native · Supabase · PostgreSQL · LLMs · RAG · ESP32</div>
+  </div>
+
+  <!-- ============ PROJETOS ============ -->
+  <section id="ai-systems">
+    <div class="sec-head">
+      <h2>AI Systems</h2>
+      <span class="ref">SHEET 01 · 05 ITEMS</span>
+    </div>
+
+    <article class="build">
+      <div class="idx"><b>B-01</b>generative ai</div>
+      <div>
+        <h3><a href="https://tresdentro.com.br/" target="_blank" rel="noopener">TryOn Shirts<span class="arrow">↗</span></a> <span>/ virtual try-on</span></h3>
+        <p class="desc">
+          A virtual try-on platform for a football apparel store. Shoppers upload a photo and instantly see themselves wearing different jerseys before buying. Built as a reusable API plus an embeddable widget, so dropping it into a new store is fast. The hard part was generating a realistic jersey fit while preserving body posture and proportions.
+        </p>
+        <div class="impact"><b>Impact</b>Cut new-store onboarding time by roughly 40%.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">stack</span>FastAPI · Gemini · image gen</div>
+        <div><span class="k">delivery</span>REST API + embeddable widget</div>
+        <div><span class="k">links</span><a href="https://tresdentro.com.br/" target="_blank" rel="noopener">Live Demo</a></div>
+        <div><span class="k">status</span><span class="status-on">in production</span></div>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="idx"><b>B-02</b>llm · vision</div>
+      <div>
+        <h3>AI Image Classification <span>/ production</span></h3>
+        <p class="desc">
+          Built an AI classification pipeline that automatically identified design styles across large product catalogs, using a multi-agent LLM architecture. It turned a slow, manual tagging job into an automated one that keeps up with the catalog.
+        </p>
+        <div class="impact"><b>Impact</b>Replaced a manual image-tagging workflow with automated classification.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">role</span>design + build</div>
+        <div><span class="k">stack</span>multi-agent LLMs · vision · classification</div>
+        <div><span class="k">status</span><span class="status-on">shipped to production</span></div>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="idx"><b>B-03</b>rag · pipeline</div>
+      <div>
+        <h3>AI Catalog Enrichment <span>/ production</span></h3>
+        <p class="desc">
+          An AI engine that extracted, analyzed and enriched product information from multiple unstructured sources: PDFs, web pages and technical documentation. It combined retrieval, parsing and LLM reasoning to produce structured product data ready for downstream systems.
+        </p>
+        <div class="impact"><b>Impact</b>Turned scattered, unstructured sources into clean data other systems could use.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">role</span>architecture + AI pipeline + production</div>
+        <div><span class="k">stack</span>LLMs · RAG · vector search · PDF/HTML parsing · FastAPI</div>
+        <div><span class="k">status</span><span class="status-on">shipped to production</span></div>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="idx"><b>B-04</b>llm</div>
+      <div>
+        <h3>AI Data Quality Platform <span>/ production</span></h3>
+        <p class="desc">
+          An LLM-powered data quality system that automatically detects inconsistencies across a large product catalog. It surfaces issues at a scale no team could review by hand and flags them for correction.
+        </p>
+        <div class="impact"><b>Impact</b>Surfaced catalog inconsistencies at production scale, far beyond manual review.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">role</span>architecture + build</div>
+        <div><span class="k">stack</span>LLMs · rules engine · large-scale data</div>
+        <div><span class="k">status</span><span class="status-on">shipped to production</span></div>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="idx"><b>B-05</b>ai + health</div>
+      <div>
+        <h3>AvaliaPsi <span>/ clinical workspace</span></h3>
+        <p class="desc">
+          A web workspace for psychologists in Brazil: patient hub, age-based anamnese, agenda, session notes, and clinical document templates in one place. Smart Notes records a session, transcribes it, and produces an editable draft the clinician reviews before saving. Normative scoring engines for WASI and WISC-IV are implemented but on hold pending publisher licensing — professional judgment stays in the loop throughout.
+        </p>
+        <div class="impact"><b>Impact</b>Consolidates agenda, records, and documentation that usually sprawl across separate tools — with assisted note-taking already working locally.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">stack</span>TanStack Start · React · TypeScript · Tailwind</div>
+        <div><span class="k">core</span>patient hub · Smart Notes · doc templates</div>
+        <div><span class="k">scoring</span>WASI / WISC-IV engine (on hold)</div>
+        <div><span class="k">status</span>in development</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ PRODUCTS ============ -->
+  <section id="products">
+    <div class="sec-head">
+      <h2>Products</h2>
+      <span class="ref">SHEET 02 · 04 ITEMS</span>
+    </div>
+
+    <article class="build">
+      <div class="idx"><b>B-06</b>mobile</div>
+      <div>
+        <h3><a href="https://apps.apple.com/us/app/sports-hub-go/id6773907859" target="_blank" rel="noopener">SportsHub<span class="arrow">↗</span></a> <span>/ mobile platform</span></h3>
+        <p class="desc">
+          Connects people, places, and activities for recreational sport — from pickup games to yoga. Discover nearby events on a map, host or join public and private games, coordinate in real-time event chat, and borrow or lend gear so missing equipment never blocks a match.
+        </p>
+        <div class="impact"><b>Impact</b>Designed, built, and shipped end-to-end as a complete mobile product — live on the App Store.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">stack</span>React Native · Expo · Supabase · TypeScript</div>
+        <div><span class="k">extras</span>event chat · gear lending · Gemini assistant</div>
+        <div><span class="k">links</span><a href="https://apps.apple.com/us/app/sports-hub-go/id6773907859" target="_blank" rel="noopener">App&nbsp;Store</a> · <a href="https://sportshubgo.com" target="_blank" rel="noopener">sportshubgo.com</a></div>
+        <div><span class="k">status</span><span class="status-on">live on iOS</span></div>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="idx"><b>B-07</b>product</div>
+      <div>
+        <h3>NoteHub <span>/ AI assistant</span></h3>
+        <p class="desc">
+          More than a notes app. Notes, calendar, tasks, reminders and voice input in one place, with an AI layer that suggests and organizes. It behaves like an intelligent personal assistant instead of one more blank text box. Ships as a PWA.
+        </p>
+        <div class="impact"><b>Impact</b>Replaces a stack of separate apps with one AI-assisted workspace.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">stack</span>React · Supabase · CF Workers</div>
+        <div><span class="k">extras</span>voice · background jobs · PWA</div>
+        <div><span class="k">status</span><span class="status-on">in testing</span></div>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="idx"><b>B-08</b>ai</div>
+      <div>
+        <h3>Job Hunt AI <span>/ resume matching</span></h3>
+        <p class="desc">
+          Helps job seekers see how well they fit a role before applying. It parses the resume, scores it against the posting the way an ATS would, surfaces keyword gaps and returns concrete recommendations, so people stop firing resumes into the void.
+        </p>
+        <div class="impact"><b>Impact</b>Tells applicants where they stand before they apply, not after.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">stack</span>AI APIs · resume parsing · scoring</div>
+        <div><span class="k">output</span>ATS score + match analysis</div>
+        <div><span class="k">status</span>in development</div>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="idx"><b>B-09</b>dev tool</div>
+      <div>
+        <h3><a href="https://www.gitdock.dev/" target="_blank" rel="noopener">GitDock<span class="arrow">↗</span></a> <span>/ open source</span></h3>
+        <p class="desc">
+          A local dashboard that pulls all your Git repositories into one place. Search,
+          organize and operate on every repo, clone, commit, push, pull, transfer, from a
+          single interface. No cloud, no tracking, and your code never leaves your machine.
+          Runs on Windows, macOS and Linux.
+        </p>
+        <div class="impact"><b>Impact</b>Cuts the daily tax of switching between repos, tabs, accounts and terminals.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">stack</span>local-first · open source</div>
+        <div><span class="k">links</span><a href="https://www.gitdock.dev/" target="_blank" rel="noopener">gitdock.dev</a> · <a href="https://github.com/gitdock-dev/gitdock" target="_blank" rel="noopener">GitHub</a></div>
+        <div><span class="k">status</span><span class="status-on">open source · shipped</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ HARDWARE & EXPERIMENTS ============ -->
+  <section id="hardware">
+    <div class="sec-head">
+      <h2>Hardware &amp; Experiments</h2>
+      <span class="ref">SHEET 03 · 01 ITEM</span>
+    </div>
+
+    <article class="build">
+      <div class="idx"><b>B-10</b>hardware<br>+ app</div>
+      <div>
+        <h3>Bike LED <span>/ wearable display</span></h3>
+        <p class="desc">
+          A 16×16 WS2812 backpack matrix driven by ESP32 and controlled from a React Native app over BLE. Live GPS metrics — speed, distance, and ride time — sync to the panel while pedaling; preset scenes cover SOS, turn signals, and visibility. A Studio editor composes JSON scenes that render identically on the app preview and the firmware.
+        </p>
+        <div class="impact"><b>Impact</b>One shared scene pipeline from phone to hardware — the LED matrix in this portfolio hero runs on the same renderer.</div>
+      </div>
+      <div class="specs">
+        <div><span class="k">stack</span>ESP32 · BLE · C++ · React Native · Expo</div>
+        <div><span class="k">display</span>16×16 WS2812 matrix</div>
+        <div><span class="k">core</span>LED Studio · JSON scenes · live ride sync</div>
+        <div><span class="k">status</span>prototype</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ BANCADA ============ -->
+  <section id="workbench">
+    <div class="sec-head">
+      <h2>Workbench</h2>
+      <span class="ref">TOOLS IN USE</span>
+    </div>
+    <p class="lede">What's currently on my bench.</p>
+    <div class="bench">
+      <div>
+        <h4>Hardware</h4>
+        <p>ESP32 / S3, mmWave sensors, WS2812 matrices, BLE, 18650 batteries, 3D printing. From jumper wires on a breadboard to a custom PCB.</p>
+      </div>
+      <div>
+        <h4>Local AI</h4>
+        <p>Fine-tuning with QLoRA, vision models, Ollama and serverless GPU deploys. I run models on my own machine before paying for the cloud.</p>
+      </div>
+      <div>
+        <h4>Software</h4>
+        <p>React / React Native, Python, automation with n8n and APIs. I reach for the simplest solution that works, and only then for the sophisticated one.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section id="contact" class="contact">
+    <div class="sec-head">
+      <h2>Contact</h2>
+      <span class="ref">OPEN CHANNEL</span>
+    </div>
+    <p class="availability"><span class="adot"></span> Available for AI Engineer, Founding Engineer and Product Engineer roles.</p>
+    <p class="big">Have an idea that needs to leave the whiteboard and become a prototype? Let&rsquo;s talk.</p>
+    <div class="links">
+      <a href="mailto:tamerleal22@gmail.com">tamerleal22@gmail.com</a>
+      <a href="https://github.com/Tam-Leal" target="_blank" rel="noopener">github.com/Tam-Leal</a>
+      <a href="https://linkedin.com/in/tamerleal" target="_blank" rel="noopener">linkedin.com/in/tamerleal</a>
+    </div>
+  </section>
+
+  </main>
+
+</div>
+
+<!-- ============ BLOCO DE TÍTULO ============ -->
+<footer>
+  <div class="titleblock">
+    <div><span class="k">Project</span><span class="v">PERSONAL PORTFOLIO · TAM LEAL</span></div>
+    <div><span class="k">Revision</span><span class="v">2026.07</span></div>
+    <div><span class="k">Scale</span><span class="v">1 : 1</span></div>
+    <div><span class="k">Sheet</span><span class="v">03 / 03</span></div>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   LED MATRIX + RADAR SWEEP
+   - Writes words in a 5x7 pixel font on a grid of "LEDs"
+   - A radar line sweeps the matrix and lights LEDs as it passes
+   - Mouse/touch lights LEDs by proximity
+   ===================================================================== */
+(function(){
+  const WORDS = ['HARDWARE', 'LOCAL AI', 'SOFTWARE', 'FIRMWARE'];
+
+  // pixel font, 5 cols x 7 rows (1 = lit)
+  const FONT = {
+    'A':[ '01110','10001','10001','11111','10001','10001','10001'],
+    'C':[ '01110','10001','10000','10000','10000','10001','01110'],
+    'D':[ '11110','10001','10001','10001','10001','10001','11110'],
+    'E':[ '11111','10000','10000','11110','10000','10000','11111'],
+    'F':[ '11111','10000','10000','11110','10000','10000','10000'],
+    'H':[ '10001','10001','10001','11111','10001','10001','10001'],
+    'I':[ '11111','00100','00100','00100','00100','00100','11111'],
+    'L':[ '10000','10000','10000','10000','10000','10000','11111'],
+    'M':[ '10001','11011','10101','10101','10001','10001','10001'],
+    'O':[ '01110','10001','10001','10001','10001','10001','01110'],
+    'R':[ '11110','10001','10001','11110','10100','10010','10001'],
+    'S':[ '01111','10000','10000','01110','00001','00001','11110'],
+    'T':[ '11111','00100','00100','00100','00100','00100','00100'],
+    'W':[ '10001','10001','10001','10101','10101','11011','10001'],
+    ' ':[ '00000','00000','00000','00000','00000','00000','00000']
+  };
+
+  const canvas = document.getElementById('ledCanvas');
+  const ctx = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // grade lógica: largura = palavra mais longa, com margem
+  const CHAR_W = 6; // 5 px + 1 de espaço
+  const longest = Math.max(...WORDS.map(w => w.length));
+  const COLS = longest * CHAR_W + 3;
+  const ROWS = 11; // 7 da fonte + margens
+
+  let dotSize, gap, W, H;
+  let target = [];       // 1 se o LED faz parte da letra
+  let level = [];        // brilho atual 0..1 de cada LED
+  let wordIdx = 0;
+  let sweepX = -0.15;    // posição da varredura (0..1)
+  let mouse = {x:-999, y:-999};
+  let lastSwitch = 0;
+
+  function resize(){
+    const cssW = canvas.parentElement.clientWidth - 2;
+    gap = Math.max(1, Math.round(cssW / COLS * 0.28));
+    dotSize = (cssW - gap * (COLS - 1)) / COLS;
+    W = cssW;
+    H = Math.round(ROWS * (dotSize + gap) - gap);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function buildTarget(word){
+    target = new Array(COLS * ROWS).fill(0);
+    const wordCols = word.length * CHAR_W - 1;
+    const startC = Math.floor((COLS - wordCols) / 2);
+    const startR = 2;
+    for(let i = 0; i < word.length; i++){
+      const glyph = FONT[word[i]] || FONT[' '];
+      for(let r = 0; r < 7; r++){
+        for(let c = 0; c < 5; c++){
+          if(glyph[r][c] === '1'){
+            target[(startR + r) * COLS + (startC + i * CHAR_W + c)] = 1;
+          }
+        }
+      }
+    }
+  }
+
+  function cellCenter(c, r){
+    return [ c * (dotSize + gap) + dotSize/2, r * (dotSize + gap) + dotSize/2 ];
+  }
+
+  function draw(ts){
+    ctx.clearRect(0, 0, W, H);
+
+    // avança a varredura de radar
+    if(!reduced){
+      sweepX += 0.0035;
+      if(sweepX > 1.35){
+        sweepX = -0.35;
+        wordIdx = (wordIdx + 1) % WORDS.length;
+        buildTarget(WORDS[wordIdx]);
+      }
+    }
+
+    const sweepPx = sweepX * W;
+
+    for(let r = 0; r < ROWS; r++){
+      for(let c = 0; c < COLS; c++){
+        const i = r * COLS + c;
+        const [cx, cy] = cellCenter(c, r);
+
+        // alvo de brilho
+        let goal = target[i] ? 0.85 : 0.06;
+
+        // radar: LEDs perto da linha de varredura ganham brilho extra
+        if(!reduced){
+          const d = Math.abs(cx - sweepPx);
+          if(d < 60) goal = Math.min(1, goal + (1 - d/60) * (target[i] ? 0.6 : 0.22));
+        }
+
+        // mouse: acende por proximidade
+        const md = Math.hypot(cx - mouse.x, cy - mouse.y);
+        if(md < 70) goal = Math.min(1, goal + (1 - md/70) * 0.9);
+
+        // decaimento suave (LEDs "apagando")
+        level[i] = level[i] === undefined ? goal : level[i] + (goal - level[i]) * 0.12;
+        const v = level[i];
+
+        // desenha o LED
+        const rad = dotSize / 2 * (0.62 + v * 0.38);
+        if(v > 0.4){
+          ctx.shadowColor = 'rgba(255,179,64,' + (v * 0.9) + ')';
+          ctx.shadowBlur = dotSize * v * 1.6;
+        } else {
+          ctx.shadowBlur = 0;
+        }
+        const rC = Math.round(90 + v * 165);
+        const gC = Math.round(60 + v * 120);
+        const bC = Math.round(50 + v * 15);
+        ctx.fillStyle = 'rgba(' + rC + ',' + gC + ',' + bC + ',' + (0.25 + v * 0.75) + ')';
+        ctx.beginPath();
+        ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.shadowBlur = 0;
+
+    // linha da varredura
+    if(!reduced && sweepPx > -60 && sweepPx < W + 60){
+      const grad = ctx.createLinearGradient(sweepPx - 50, 0, sweepPx, 0);
+      grad.addColorStop(0, 'rgba(255,179,64,0)');
+      grad.addColorStop(1, 'rgba(255,210,122,0.28)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(sweepPx - 50, 0, 50, H);
+      ctx.fillStyle = 'rgba(255,210,122,0.5)';
+      ctx.fillRect(sweepPx, 0, 1.5, H);
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  canvas.addEventListener('pointermove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  canvas.addEventListener('pointerleave', () => { mouse.x = -999; mouse.y = -999; });
+
+  // click/tap switches the word instantly
+  canvas.addEventListener('click', () => {
+    wordIdx = (wordIdx + 1) % WORDS.length;
+    buildTarget(WORDS[wordIdx]);
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+  buildTarget(WORDS[0]);
+  if(reduced){
+    // modo estático: renderiza um frame com a palavra acesa
+    level = target.map(t => t ? 0.85 : 0.06);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* soft reveal of projects on scroll */
+(function(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.build').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
