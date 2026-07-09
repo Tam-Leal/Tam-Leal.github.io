@@ -678,6 +678,7 @@
    LED MATRIX + RADAR SWEEP
    - Writes words in a 5x7 pixel font on a grid of "LEDs"
    - A radar line sweeps the matrix and lights LEDs as it passes
+   - Chase wave plays briefly between word changes
    - Mouse/touch lights LEDs by proximity
    ===================================================================== */
 (function(){
@@ -723,7 +724,30 @@
   let wordIdx = 0;
   let sweepX = -0.15;    // posição da varredura (0..1)
   let mouse = {x:-999, y:-999};
-  let lastSwitch = 0;
+  let mode = 'word';     // 'word' | 'interlude'
+  let interludeStart = 0;
+  const INTERLUDE_MS = 1500;
+
+  function startWordTransition(){
+    wordIdx = (wordIdx + 1) % WORDS.length;
+    if(reduced){
+      buildTarget(WORDS[wordIdx]);
+      sweepX = -0.35;
+      return;
+    }
+    mode = 'interlude';
+    interludeStart = performance.now();
+    target = new Array(COLS * ROWS).fill(0);
+  }
+
+  function chaseGoal(col){
+    const t = Math.min(1, (performance.now() - interludeStart) / INTERLUDE_MS);
+    const chase = t * 1.18 - 0.06;
+    const ncol = col / Math.max(COLS - 1, 1);
+    const head = Math.exp(-Math.pow((ncol - chase) * 5.2, 2));
+    const tail = Math.exp(-Math.pow((ncol - (chase - 0.14)) * 6.5, 2)) * 0.42;
+    return 0.06 + Math.min(0.92, head * 0.82 + tail);
+  }
 
   function resize(){
     const cssW = canvas.parentElement.clientWidth - 2;
@@ -761,30 +785,35 @@
   function draw(ts){
     ctx.clearRect(0, 0, W, H);
 
-    // avança a varredura de radar
-    if(!reduced){
-      sweepX += 0.0035;
-      if(sweepX > 1.35){
-        sweepX = -0.35;
-        wordIdx = (wordIdx + 1) % WORDS.length;
+    if(mode === 'interlude'){
+      const elapsed = performance.now() - interludeStart;
+      if(elapsed >= INTERLUDE_MS){
+        mode = 'word';
         buildTarget(WORDS[wordIdx]);
+        sweepX = -0.35;
       }
+    } else if(!reduced){
+      sweepX += 0.0035;
+      if(sweepX > 1.35) startWordTransition();
     }
 
     const sweepPx = sweepX * W;
+    const showRadar = mode === 'word' && !reduced;
 
     for(let r = 0; r < ROWS; r++){
       for(let c = 0; c < COLS; c++){
         const i = r * COLS + c;
         const [cx, cy] = cellCenter(c, r);
 
-        // alvo de brilho
-        let goal = target[i] ? 0.85 : 0.06;
-
-        // radar: LEDs perto da linha de varredura ganham brilho extra
-        if(!reduced){
-          const d = Math.abs(cx - sweepPx);
-          if(d < 60) goal = Math.min(1, goal + (1 - d/60) * (target[i] ? 0.6 : 0.22));
+        let goal;
+        if(mode === 'interlude'){
+          goal = chaseGoal(c);
+        } else {
+          goal = target[i] ? 0.85 : 0.06;
+          if(showRadar){
+            const d = Math.abs(cx - sweepPx);
+            if(d < 60) goal = Math.min(1, goal + (1 - d/60) * (target[i] ? 0.6 : 0.22));
+          }
         }
 
         // mouse: acende por proximidade
@@ -815,7 +844,7 @@
     ctx.shadowBlur = 0;
 
     // linha da varredura
-    if(!reduced && sweepPx > -60 && sweepPx < W + 60){
+    if(showRadar && sweepPx > -60 && sweepPx < W + 60){
       const grad = ctx.createLinearGradient(sweepPx - 50, 0, sweepPx, 0);
       grad.addColorStop(0, 'rgba(255,179,64,0)');
       grad.addColorStop(1, 'rgba(255,210,122,0.28)');
@@ -835,10 +864,10 @@
   });
   canvas.addEventListener('pointerleave', () => { mouse.x = -999; mouse.y = -999; });
 
-  // click/tap switches the word instantly
+  // click/tap switches the word (with interlude animation)
   canvas.addEventListener('click', () => {
-    wordIdx = (wordIdx + 1) % WORDS.length;
-    buildTarget(WORDS[wordIdx]);
+    if(mode === 'interlude') return;
+    startWordTransition();
   });
 
   window.addEventListener('resize', resize);
